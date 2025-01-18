@@ -19,7 +19,6 @@ export const createSnippetAction = async (prevSate: any, formData: FormData) => 
         const session: any = await getServerSession(authOptions);
         
         if (!session) {
-            console.error('No active session found');
             return {
                 message: 'You must be logged in to create a snippet.'
             };
