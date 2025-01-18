@@ -1,10 +1,9 @@
 import { NextAuthOptions, Session, User } from 'next-auth';
-import { JWT } from 'next-auth/jwt'; 
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { JWT } from 'next-auth/jwt';
 import bcrypt from 'bcrypt';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { prisma } from '@/lib/prisma';
+import { query } from './db';
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -29,10 +28,9 @@ export const authOptions: NextAuthOptions = {
                     throw new Error('Email and password are required');
                 }
 
-                const user = await prisma.user.findUnique({
-                    where: { email },
-                });
-
+                const result = await query('SELECT * FROM users WHERE email = $1', [email]);
+                const user = result.rows[0];
+                
                 if (user && user.password) {
                     const isValid = await bcrypt.compare(password, user.password);
                     if (isValid) {
@@ -44,7 +42,7 @@ export const authOptions: NextAuthOptions = {
             },
         }),
     ],
-    adapter: PrismaAdapter(prisma),
+
     session: {
         strategy: 'jwt',
     },
@@ -57,7 +55,7 @@ export const authOptions: NextAuthOptions = {
         },
         async session({ session, token }: { session: Session; token: JWT }) {
             if (token?.id) {
-                session.user = session.user || {}; // Initialize user object if it's undefined
+                session.user = session.user || {};
                 session.user.id = token.id;
             }
             return session;

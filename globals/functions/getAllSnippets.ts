@@ -1,20 +1,30 @@
-import { authOptions } from "@/lib/authOptions";
-import { prisma } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
+import { query } from "@/lib/db";
 
 export const getAllSnippets = async () => {
     try {
-        const session: any = await getServerSession(authOptions);
+        const sqlQuery = `
+            SELECT 
+                snippets.id AS snippet_id,
+                snippets.code,
+                snippets.title,
+                snippets.created_at AS created_at,
+                users.id AS user_id,
+                users.name,
+                users.email 
+            FROM snippets
+            JOIN users ON snippets.author_id = users.id;
+        `;
+        
+        const results = await query(sqlQuery);
 
-        const snippets = await prisma.snippet.findMany({
-            where: {
-                author: session?.user?.id
-            },
-            orderBy: { createdAt: 'desc' },
-        })
-        return snippets;
+        if (results.rows.length > 0) {
+            const snippets = results.rows;
+            return snippets;
+        }
+
+        return [];
     } catch (error) {
-        console.log(error);
-        return []
+        console.error("Error fetching snippets:", error);
+        return [];
     }
 }
