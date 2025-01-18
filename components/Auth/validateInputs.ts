@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 
 export const validate = (name: string, value: string) => {
     if (name === 'email') {

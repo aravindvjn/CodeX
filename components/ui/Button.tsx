@@ -6,13 +6,11 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   style?: CSSProperties;
   destination?: string;
-  params?: any;
   onClick?: () => void;
 }
 
 function Button({
   destination,
-  params,
   children,
   isLoading,
   onClick,
@@ -22,7 +20,7 @@ function Button({
   const router = useRouter();
   const handleClick = () => {
     if (destination) {
-      router.push(destination, params);
+      router.push(destination);
     } else if (onClick) {
       onClick();
     }

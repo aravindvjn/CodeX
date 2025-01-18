@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "../ui/Button";
-import Link from "next/link";
 
 function AddSnippets() {
   return (

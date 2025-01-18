@@ -5,7 +5,7 @@ import { CodeSnippet } from "./CodeSnippet";
 import Button from "../ui/Button";
 import BackButton from "../ui/BackButton";
 
-function DetailedCard({ title, code, id }: CardProps) {
+function DetailedCard({ title, code }: CardProps) {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-3 items-start">
