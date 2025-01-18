@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #121212;
+  --foreground: #ffffff;
+  --lightgray:#282828;
+  --cardbackground:#282828;
+  --primarycolor:#22e2e5
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --cardbackground:#3c3c3c;
+  }
+} */
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family:'DM Sans', Helvetica, sans-serif;
+}
