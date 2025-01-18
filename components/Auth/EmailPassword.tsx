@@ -30,7 +30,7 @@ export default function EmailPassword({ isLogin }: AuthProps) {
   //Handking the change event
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setInput((prevInput: any) => ({
+    setInput((prevInput: AuthType) => ({
       ...prevInput,
       [name]: {
         value,
@@ -44,7 +44,7 @@ export default function EmailPassword({ isLogin }: AuthProps) {
     : "Already Have an Account?";
 
   //Submit
-  const submitHandler = async (e: any) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     setResponse("");
     //Validating Inputs
@@ -119,7 +119,7 @@ export default function EmailPassword({ isLogin }: AuthProps) {
           <Inputs
             maxLength={15}
             isValid={true}
-            onChange={(e: any) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setError("");
               setName(e.target.value);
             }}

@@ -3,11 +3,13 @@ import DetailedCard from "@/components/Card/DetailedCard";
 import { getSnippetById } from "@/globals/functions/getSnippetById";
 import { notFound } from "next/navigation";
 import React from "react";
+
 type SnippetPropType = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
+
 async function page({ params }: SnippetPropType) {
   const { id } = await params;
   const snippet = await getSnippetById(id);

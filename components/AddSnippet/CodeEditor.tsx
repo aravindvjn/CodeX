@@ -4,29 +4,28 @@ import Editor from "@monaco-editor/react";
 
 export default function CodeEditor() {
   const [code, setCode] = useState<string>("");
-  const [windowSize, setWindowSize] = useState({
+  const [windowSize, setWindowSize] = useState<{ width: number; height: number }>({
     width: 0,
     height: 0,
   });
 
-  //Handle Change in code
-  const handleEditorChange = (value: any) => {
-    setCode(value || "");
+  const handleEditorChange = (value: string | undefined) => {
+    setCode(value || "");  
 
     const hiddenInput = document.getElementById("code") as HTMLInputElement;
 
-    if (hiddenInput) {
+    if (hiddenInput && value !== undefined) {
       hiddenInput.value = value;
     }
   };
 
   useEffect(() => {
-    function handleResize() {
+    const handleResize = () => {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
-    }
+    };
 
     window.addEventListener("resize", handleResize);
 
@@ -44,7 +43,7 @@ export default function CodeEditor() {
         height="100%"
         defaultLanguage="javascript"
         value={code}
-        onChange={handleEditorChange}
+        onChange={handleEditorChange}  
         theme="vs-dark"
       />
     </div>
