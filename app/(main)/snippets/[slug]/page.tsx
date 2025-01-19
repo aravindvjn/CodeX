@@ -2,38 +2,30 @@
 import Card from "@/components/Card/Card";
 import AddSnippets from "@/components/Home/AddSnippets";
 import Search from "@/components/Home/Search";
-import Inputs from "@/components/ui/Inputs";
 import { getAllSnippets } from "@/globals/functions/getAllSnippets";
+import { PageSearchParams } from "../../page";
 
-export type PageSearchParams = {
-  searchParams:
-    | Promise<{
-        search: string;
-      }>
-    | undefined;
-  params: Promise<{
-    slug: string;
-  }>;
-};
-// export const revalidate = 0
-export default async function Home({
+export default async function Page({
   searchParams = undefined,
+  params,
 }: PageSearchParams) {
-
-  const { search='' } = (await searchParams) || {};
+  const { slug } = await params;
+  const { search = "" } = (await searchParams) || {};
 
   const data = await getAllSnippets({
-    slug: "",
-    search: search,
+    slug,
+    search: search || "",
   });
   return (
     <div>
       <Search input={search} />
-      <AddSnippets />
+      <AddSnippets slug={slug} />
       <div className=" gap-3 md:gap-5 mt-5 grid sm:grid-cols-2 lg:grid-cols-3">
-        {data?.map((item, index) => (
-          <Card key={index} {...item} />
-        ))}
+        {data.length > 0 ? (
+          data?.map((item, index) => <Card key={index} {...item} />)
+        ) : (
+          <p className="text-center pt-5">No Snippets are Found.</p>
+        )}
       </div>
     </div>
   );

@@ -5,19 +5,36 @@ import { CodeSnippet } from "./CodeSnippet";
 import Button from "../ui/Button";
 import BackButton from "../ui/BackButton";
 import DeleteButton from "./DeleteButton";
+import { extractLangauge } from "@/globals/functions/helper";
+import Link from "next/link";
 
-function DetailedCard({ snippet_id, title, code, you, name }: CardProps) {
+function DetailedCard({
+  snippet_id,
+  title,
+  code,
+  you,
+  name,
+  language,
+  user_id,
+}: CardProps) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-3 items-center">
         <BackButton />
         <p className="text-[16px] text-primarycolor font-semibold">{title}</p>
       </div>
-      <p className="text-right opacity-70">Author : {name || "Unknown"}</p>
+      <div className="flex opacity-70 text-[10px] justify-between">
+        <p>{extractLangauge(language || "")}</p>
+
+        <Link href={`/author?identifier=${user_id}`}>
+          {" "}
+          <p className="">Author : {name || "Unknown"}</p>
+        </Link>
+      </div>
       <CodeSnippet code={code || ""} />
       {you && (
         <div className="flex justify-between">
-          <Button destination={`/snippets/${snippet_id}/edit`}>Edit</Button>
+          <Button destination={`/snippet/${snippet_id}/edit`}>Edit</Button>
           <DeleteButton snippet_id={snippet_id || ""} />
         </div>
       )}

@@ -2,7 +2,13 @@
 import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 
-export default function CodeEditor({ initialCode }: { initialCode: string }) {
+export default function CodeEditor({
+  initialCode,
+  language,
+}: {
+  initialCode: string;
+  language: string;
+}) {
   const [code, setCode] = useState<string>(initialCode);
   const [windowSize, setWindowSize] = useState<{
     width: number;
@@ -11,7 +17,6 @@ export default function CodeEditor({ initialCode }: { initialCode: string }) {
     width: 0,
     height: 0,
   });
-
   const handleEditorChange = (value: string | undefined) => {
     setCode(value || "");
 
@@ -44,7 +49,7 @@ export default function CodeEditor({ initialCode }: { initialCode: string }) {
     >
       <Editor
         height="100%"
-        defaultLanguage="javascript"
+        language={language || "javascript"}
         value={code}
         onChange={handleEditorChange}
         theme="vs-dark"

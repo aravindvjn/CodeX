@@ -1,13 +1,17 @@
 "use client";
-import React, { useActionState } from "react";
+import React, { useActionState, useState } from "react";
 import Inputs from "../ui/Inputs";
 import CodeEditor from "./CodeEditor";
 import { snippetAction } from "@/globals/actions";
 import Button from "../ui/Button";
 import { CardProps } from "../Card/Card";
 import { PageType, prevActionStateType } from "./type";
+import LanguageOptions from "./SelectLanguage";
 
-function AddSnippet({ code, snippet_id, title }: CardProps) {
+function AddSnippet({ code, snippet_id, title, language }: CardProps) {
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(
+    language || ""
+  );
   //finding the page type
   let page: PageType = "Create Snippet";
   if (snippet_id) {
@@ -29,10 +33,14 @@ function AddSnippet({ code, snippet_id, title }: CardProps) {
     <form action={action} method="post" className="flex flex-col gap-5">
       <p className="text-lg font-semibold">{page}</p>
       {state && <p className="text-red-600">{state?.message}</p>}
+      <LanguageOptions selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
       <Inputs defaultValue={title} name="title" />
       <div>
         <label htmlFor="code">Source Code</label>
-        <CodeEditor initialCode={code || ""} />
+        <CodeEditor
+          language={selectedLanguage || ""}
+          initialCode={code || ""}
+        />
         <input defaultValue={code} type="hidden" name="code" id="code" />
       </div>
       <Button disabled={isPending} type="submit">

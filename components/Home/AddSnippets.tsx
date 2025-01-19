@@ -1,12 +1,18 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Button from "../ui/Button";
+import LanguageOptions from "../AddSnippet/SelectLanguage";
 
-function AddSnippets() {
+function AddSnippets({ slug }: { slug?: string }) {
+  const [language, setLanguage] = useState<string>(slug || "");
   return (
     <div className="flex items-center justify-between">
-      <p className="text-lg font-semibold">Your Code Snippets</p>
-
-      <Button destination="add-snippets">Add Snippet</Button>
+      <LanguageOptions
+        selectedLanguage={language}
+        link
+        setSelectedLanguage={setLanguage}
+      />
+      <Button destination="/add-snippets">Add Snippet</Button>
     </div>
   );
 }

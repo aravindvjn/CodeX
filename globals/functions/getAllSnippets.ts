@@ -1,30 +1,50 @@
 import { query } from "@/lib/db";
-
-export const getAllSnippets = async () => {
+type GetSnippetsType = {
+    slug?: string;
+    search?: string;
+}
+export const getAllSnippets = async ({ slug, search }: GetSnippetsType) => {
     try {
-        const sqlQuery = `
-            SELECT 
-                snippets.id AS snippet_id,
-                snippets.code,
-                snippets.title,
-                snippets.created_at AS created_at,
-                users.id AS user_id,
-                users.name,
-                users.email 
-            FROM snippets
-            JOIN users ON snippets.author_id = users.id;
-        `;
-        
-        const results = await query(sqlQuery);
+        // Construct the query base
+        let sqlQuery = `
+        SELECT 
+            snippets.id AS snippet_id,
+            snippets.code,
+            snippets.title,
+            snippets.language,
+            snippets.updated_at,
+            snippets.created_at,
+            users.id AS user_id,
+            users.name,
+            users.email 
+        FROM snippets
+        JOIN users ON snippets.author_id = users.id
+    `;
 
-        if (results.rows.length > 0) {
-            const snippets = results.rows;
-            return snippets;
+        const queryParams: string[] = [];
+        let conditionClauses: string[] = [];
+
+        if (slug) {
+            conditionClauses.push(`snippets.language = $${queryParams.length + 1}`);
+            queryParams.push(slug);
         }
 
-        return [];
+        if (search) {
+            conditionClauses.push(`(snippets.title ILIKE $${queryParams.length + 1} OR snippets.code ILIKE $${queryParams.length + 1})`);
+            queryParams.push(`%${search}%`);
+        }
+
+        if (conditionClauses.length > 0) {
+            sqlQuery += ` WHERE ${conditionClauses.join(' AND ')}`;
+        }
+
+        console.log(sqlQuery);
+
+        const results = await query(sqlQuery, queryParams);
+
+        return results.rows.length > 0 ? results.rows : [];
     } catch (error) {
         console.error("Error fetching snippets:", error);
         return [];
     }
-}
+};

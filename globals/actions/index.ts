@@ -12,7 +12,7 @@ export const snippetAction = async (prevState: prevActionStateType, formData: Fo
     try {
         const title = formData.get('title')?.toString().trim();
         const code = formData.get('code')?.toString().trim();
-
+        const language = formData.get('language')?.toString().trim();
         if (!title || !code) {
             return { message: 'You cannot leave empty fields.', snippet_id: prevState?.snippet_id, page: prevState?.page };
         }
@@ -29,16 +29,16 @@ export const snippetAction = async (prevState: prevActionStateType, formData: Fo
         if (prevState?.page === 'Edit Snippet') {
             results = await query(`
                 UPDATE snippets
-                SET title=$1, code=$2, updated_at=CURRENT_TIMESTAMP
-                WHERE id=$3 AND author_id=$4
+                SET title=$1, code=$2,language=$3, updated_at=CURRENT_TIMESTAMP
+                WHERE id=$4 AND author_id=$5
                 RETURNING *;
-            `, [title, code, prevState?.snippet_id, userId]);
+            `, [title, code, language, prevState?.snippet_id, userId]);
         } else {
 
             results = await query(`
-            INSERT INTO snippets (title, code, author_id)
-            VALUES ($1, $2, $3) RETURNING *;
-        `, [title, code, userId]);
+            INSERT INTO snippets (title, code, author_id,language)
+            VALUES ($1, $2, $3,$4) RETURNING *;
+        `, [title, code, userId, language]);
 
         }
 
