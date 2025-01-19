@@ -9,7 +9,7 @@ export default async function Home() {
   return (
     <div>
       <AddSnippets />
-      <div className="flex flex-col gap-3 md:gap-5 mt-5 sm:grid md:grid-cols-2 lg:grid-cols-3">
+      <div className=" gap-3 md:gap-5 mt-5 grid sm:grid-cols-2 lg:grid-cols-3">
         {data?.map((item, index) => {
           console.log(item);
           return <Card key={index} {...item} />;

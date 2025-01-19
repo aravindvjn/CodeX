@@ -4,7 +4,7 @@ import { getSnippetById } from "@/globals/functions/getSnippetById";
 import { notFound } from "next/navigation";
 import React from "react";
 
-type SnippetPropType = {
+export type SnippetPropType = {
   params: Promise<{
     id: string;
   }>;
@@ -14,11 +14,11 @@ async function page({ params }: SnippetPropType) {
   const { id } = await params;
   const snippet = await getSnippetById(id);
   if (!snippet) {
-    return notFound();
+    notFound();
   }
   return (
     <div>
-      <DetailedCard {...snippet!} />
+      <DetailedCard {...snippet} />
     </div>
   );
 }

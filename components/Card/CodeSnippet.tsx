@@ -9,7 +9,8 @@ export const CodeSnippet = ({ code }: { code: string }) => (
       overflowWrap: "break-word",    
       whiteSpace: "pre-wrap",       
       wordWrap: "break-word", 
-      backgroundColor:'transparent'
+      backgroundColor:'transparent',
+      scrollbarWidth:'none'
     }}
     wrapLines={true}               
     showInlineLineNumbers={true}    
