@@ -1,12 +1,15 @@
 import React from "react";
 import { AuthorDataProps } from "./type";
-
-function Profile({ created_at, email, id, name }: AuthorDataProps) {
+import QRCodeComponent from "../Features/QRcode";
+import { formatDate } from "@/globals/functions/helper";
+function Profile({ created_at, name }: AuthorDataProps) {
   return (
-    <div>
-      <h2>{name}</h2>
-      {/* <p>Created At: {created_at}</p> */}
-      <p>Email: {email}</p>
+    <div className="flex gap-3 items-end mt-4">
+      <QRCodeComponent />
+      <div className="flex flex-col">
+        <h2 className="text-[18px] font-bold text-primarycolor ">{name}</h2>
+        <p className="text-gray-300">Joined on {formatDate(created_at)}</p>
+      </div>
       <hr />
     </div>
   );

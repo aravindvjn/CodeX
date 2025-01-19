@@ -1,3 +1,4 @@
+import Activities from "@/components/Author/Activities";
 import Profile from "@/components/Author/Profile";
 import { getAuthorData } from "@/globals/functions/getAuthorData";
 import { notFound } from "next/navigation";
@@ -17,6 +18,7 @@ async function page({ searchParams }: AuthorProps) {
   return (
     <div>
       <Profile {...data} />
+      <Activities />
     </div>
   );
 }

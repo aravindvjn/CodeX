@@ -14,3 +14,12 @@ export const extractLangauge = (value: string) => {
   const result = languages.find(lan => lan.value === value);
   return result?.label || value || '';
 }
+
+export const formatDate = (value: string) => {
+  const date = new Date(value);
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};

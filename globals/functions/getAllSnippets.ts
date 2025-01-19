@@ -1,4 +1,5 @@
 import { query } from "@/lib/db";
+import { getUserId } from "@/lib/session";
 type GetSnippetsType = {
     slug?: string;
     search?: string;
@@ -38,7 +39,6 @@ export const getAllSnippets = async ({ slug, search }: GetSnippetsType) => {
             sqlQuery += ` WHERE ${conditionClauses.join(' AND ')}`;
         }
 
-        console.log(sqlQuery);
 
         const results = await query(sqlQuery, queryParams);
 

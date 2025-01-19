@@ -4,6 +4,7 @@ import AddSnippets from "@/components/Home/AddSnippets";
 import Search from "@/components/Home/Search";
 import { getAllSnippets } from "@/globals/functions/getAllSnippets";
 import { PageSearchParams } from "../../page";
+import NoResults from "@/components/Features/NoResults";
 
 export default async function Page({
   searchParams = undefined,
@@ -21,12 +22,10 @@ export default async function Page({
       <Search input={search} />
       <AddSnippets slug={slug} />
       <div className=" gap-3 md:gap-5 mt-5 grid sm:grid-cols-2 lg:grid-cols-3">
-        {data.length > 0 ? (
-          data?.map((item, index) => <Card key={index} {...item} />)
-        ) : (
-          <p className="text-center pt-5">No Snippets are Found.</p>
-        )}
+        {data.length > 0 &&
+          data?.map((item, index) => <Card key={index} {...item} />)}
       </div>
+      {data?.length === 0 && <NoResults />}
     </div>
   );
 }
