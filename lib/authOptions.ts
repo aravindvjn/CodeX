@@ -21,6 +21,7 @@ export const authOptions: NextAuthOptions = {
         maxAge: 30 * 24 * 60 * 60,
     },
     callbacks: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         async jwt({ token, account, profile }: { token: JWT; account?: any; profile?: any }) {
             if (account?.provider && profile) {
                 try {
