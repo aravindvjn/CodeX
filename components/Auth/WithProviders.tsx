@@ -2,13 +2,14 @@
 import React from "react";
 import Button from "../ui/Button";
 import { signIn } from "next-auth/react";
+import { callBackURL } from "@/globals/constants/constants";
 
 function WithProviders() {
   const signWithGoogle = () => {
-    signIn("google", { callbackUrl: "/" });
+    signIn("google", { callbackUrl: callBackURL || "/" });
   };
   const signWithGithub = () => {
-    signIn("github", { callbackUrl: "/" });
+    signIn("github", { callbackUrl: callBackURL || "/" });
   };
   return (
     <div className="flex justify-center items-center h-dvh flex-col gap-5">
