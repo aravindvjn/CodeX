@@ -4,7 +4,6 @@ import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
 import { query } from './db';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({

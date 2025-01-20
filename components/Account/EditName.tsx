@@ -23,7 +23,7 @@ function EditName({ name }: { name: string }) {
 
   useEffect(() => {
     setNewName(name);
-  }, []);
+  },[]);
   return (
     <form
       action={action}

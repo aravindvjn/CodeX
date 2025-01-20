@@ -1,9 +1,6 @@
 import Image from "next/image";
 import React from "react";
 import { AuthorDataProps } from "../Author/type";
-import { FaEdit } from "react-icons/fa";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { IoMdCloseCircleOutline } from "react-icons/io";
 import EditName from "./EditName";
 export type User = {
   user: AuthorDataProps;
