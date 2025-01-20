@@ -21,34 +21,37 @@ export const authOptions: NextAuthOptions = {
         maxAge: 30 * 24 * 60 * 60,
     },
     callbacks: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         async jwt({ token, account, profile }: { token: JWT; account?: any; profile?: any }) {
             if (account?.provider && profile) {
-                const existingUser = await query(
-                    'SELECT id FROM users WHERE email = $1 AND provider = $2',
-                    [profile.email, account.provider]
-                );
-
-                let userId;
-                if (existingUser.rows.length > 0) {
-                    userId = existingUser.rows[0].id;
-                } else {
-                    const result = await query(
-                        `INSERT INTO users (email, name, provider) 
-                         VALUES ($1, $2, $3) RETURNING id`,
-                        [
-                            profile.email,
-                            profile.name || 'Unknown',
-                            account.provider,
-                        ]
+                try {
+                    const existingUser = await query(
+                        'SELECT id FROM users WHERE email = $1 AND provider = $2',
+                        [profile.email, account.provider]
                     );
-                    userId = result.rows[0].id;
-                }
 
-                token.id = userId;
-                token.email = profile.email;
-                token.name = profile.name || 'Unknown';
-                token.picture = profile.picture || profile.avatar_url;
+                    let userId;
+                    if (existingUser.rows.length > 0) {
+                        userId = existingUser.rows[0].id;
+                    } else {
+                        const result = await query(
+                            `INSERT INTO users (email, name, provider) 
+                             VALUES ($1, $2, $3) RETURNING id`,
+                            [
+                                profile.email,
+                                profile.name || 'Unknown',
+                                account.provider,
+                            ]
+                        );
+                        userId = result.rows[0].id;
+                    }
+
+                    token.id = userId;
+                    token.email = profile.email;
+                    token.name = profile.name || 'Unknown';
+                    token.picture = profile.picture || profile.avatar_url;
+                } catch (error) {
+                    console.error('Error during user query:', error);
+                }
             }
 
             return token;

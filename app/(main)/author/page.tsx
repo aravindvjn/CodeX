@@ -20,7 +20,7 @@ async function page({ searchParams }: AuthorProps) {
   return (
     <div>
       <Profile {...data} />
-      <Activities snippets={snippets} />
+      <Activities user={data} snippets={snippets} />
     </div>
   );
 }

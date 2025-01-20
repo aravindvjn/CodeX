@@ -15,7 +15,6 @@ export type PageSearchParams = {
     slug: string;
   }>;
 };
-// export const revalidate = 0
 export default async function Home({
   searchParams = undefined,
 }: PageSearchParams) {
