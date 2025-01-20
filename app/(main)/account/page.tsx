@@ -9,16 +9,16 @@ import React from "react";
 
 async function page() {
   const session = await getServerSession(authOptions);
-  if (!session) {
+  if (!session?.user) {
     notFound();
   }
   const { user: data } = session;
   const user = await getAuthorData(data?.id);
-  const snippets =await getSnippetsByUserId(user.id);
+  const snippets = await getSnippetsByUserId(user.id);
   return (
     <div>
       <AccountProfile user={user} data={data} />
-      <Activities user={user} snippets={snippets}/>
+      <Activities user={user} snippets={snippets} />
     </div>
   );
 }
