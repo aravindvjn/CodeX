@@ -16,9 +16,9 @@ function WithProviders() {
         <p className="text-2xl ">CodeX Media</p>
         <p className="text-[10px]">A Social Nework for Developer</p>
       </div>
-      <Button onClick={signWithGoogle}>Sign with Google</Button>
+      <Button onClick={signWithGoogle}>Continue with Google</Button>
       <p className=" text-gray-500">OR</p>
-      <Button onClick={signWithGithub}>Sign with Github</Button>
+      <Button onClick={signWithGithub}>Continue with Github</Button>
     </div>
   );
 }

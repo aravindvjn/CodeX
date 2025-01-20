@@ -1,4 +1,5 @@
 import AccountProfile from "@/components/Account/AccountProfile";
+import { getAuthorData } from "@/globals/functions/getAuthorData";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
@@ -9,10 +10,12 @@ async function page() {
   if (!session) {
     notFound();
   }
-  const { user } = session;
+  const { user: data } = session;
+
+  const user = await getAuthorData(data?.id);
   return (
     <div>
-      <AccountProfile user={user} />
+      <AccountProfile user={user} data={data} />
     </div>
   );
 }

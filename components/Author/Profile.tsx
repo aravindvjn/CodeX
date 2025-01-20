@@ -1,3 +1,4 @@
+'use server'
 import React from "react";
 import { AuthorDataProps } from "./type";
 import QRCodeComponent from "../Features/QRcode";
@@ -8,7 +9,7 @@ function Profile({ created_at, name }: AuthorDataProps) {
       <QRCodeComponent />
       <div className="flex flex-col">
         <h2 className="text-[18px] font-bold text-primarycolor ">{name}</h2>
-        <p className="text-gray-300">Joined on {formatDate(created_at)}</p>
+        <p className="text-gray-400">Joined on {formatDate(created_at)}</p>
       </div>
       <hr />
     </div>

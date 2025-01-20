@@ -40,7 +40,7 @@ function Card({
         </div>
       </div>
       <pre className="overflow-hidden text-[12px] opacity-90 max-h-[100px]">
-        <code className="line">{code}</code>
+        <code>{code}</code>
       </pre>
       <div>
         <Button destination={`/snippet/${snippet_id}`}>Read More</Button>
