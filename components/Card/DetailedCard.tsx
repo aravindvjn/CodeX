@@ -33,7 +33,7 @@ function DetailedCard({
       </div>
       <CodeSnippet code={code || ""} />
       {you && (
-        <div className="flex justify-between">
+        <div className="flex justify-between sm:justify-normal gap-5">
           <Button destination={`/snippet/${snippet_id}/edit`}>Edit</Button>
           <DeleteButton snippet_id={snippet_id || ""} />
         </div>

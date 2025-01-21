@@ -1,29 +1,12 @@
 import React from "react";
 import Comment from "./Comment";
+import { CommentTypes } from "./type";
 
-function CommentSection() {
-  const data = [
-    {
-      id: 1,
-      author: "John Doe",
-      comment: "This is a great post!",
-      createdAt: new Date(),
-      likes: 10,
-      replies: [
-        {
-          id: 2,
-          author: "Jane Smith",
-          comment: "I agree!",
-          createdAt: new Date(),
-          likes: 5,
-        },
-      ],
-    },
-  ];
+function CommentSection({ comments }: { comments: CommentTypes[] }) {
   return (
-    <div className="pt-2">
-      {data?.map((item) => (
-        <Comment {...item} />
+    <div className="pt-2 pb-10 flex flex-col gap-3">
+      {comments?.map((comment) => (
+        <Comment key={comment?.comment_id} {...comment} />
       ))}
     </div>
   );

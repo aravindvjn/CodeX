@@ -1,13 +1,14 @@
 import { formatDate } from "@/globals/functions/helper";
 import React from "react";
+import { CommentTypes } from "./type";
 
-function Comment({ comment, author, createdAt, replies }: any) {
+function Comment({ name, text, timestamp }: CommentTypes) {
   return (
     <div className="rounded-lg rounded-tl-none bg-cardbackground px-4 py-2 w-fit gap-2">
-      <p className="font-bold">{author}</p>
-      <p className="font-light">{comment}</p>
+      <p className="font-bold">{name}</p>
+      <p className="font-light">{text}</p>
       <p className="opacity-70 text-[10px] text-right">
-        {formatDate(createdAt)}
+        {formatDate(timestamp)}
       </p>
     </div>
   );
