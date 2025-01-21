@@ -1,5 +1,6 @@
 "use server";
 import DetailedCard from "@/components/Card/DetailedCard";
+import CommentSection from "@/components/Comments/CommentSection";
 import { getSnippetById } from "@/globals/functions/getSnippetById";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -19,6 +20,7 @@ async function page({ params }: SnippetPropType) {
   return (
     <div>
       <DetailedCard {...snippet} />
+      <CommentSection/>
     </div>
   );
 }
