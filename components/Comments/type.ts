@@ -10,7 +10,10 @@ export type CommentTypes = {
     name: string;
     setReply?: SetReplyType;
     reply?: ReplyType;
-    replies_count?: string
+    replies_count?: string;
+    username?: string;
+    replies?: CommentTypes[],
+    setReplies?: Dispatch<SetStateAction<CommentTypes[]>>
 }
-export type ReplyType = { name: string, comment_id: string | number } | undefined
+export type ReplyType = { username: string, comment_id: string | number } | undefined
 export type SetReplyType = Dispatch<SetStateAction<ReplyType>>

@@ -8,7 +8,12 @@ function Activities({ snippets, user }: { snippets: CardProps[]; user: User }) {
       <p className="text-lg font-semibold">Activities : </p>
       <div className="flex flex-col gap-3 md:grid md:grid-cols-2 lg:grid-cols-3">
         {snippets?.map((snippet) => (
-          <Card key={snippet.id} {...snippet} {...user} />
+          <Card
+            key={snippet.id}
+            snippet_id={snippet.id}
+            {...snippet}
+            {...user}
+          />
         ))}
       </div>
       {snippets?.length === 0 && <NoActivities />}

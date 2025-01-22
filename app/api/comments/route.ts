@@ -15,6 +15,7 @@ export const GET = async (req: NextRequest) => {
                 c.timestamp AS timestamp,
                 u.name,
                 u.id AS user_id,
+                u.username AS username,
                 c.parent_comment_id,
                 (SELECT COUNT(*) FROM comments WHERE parent_comment_id = c.comment_id) AS replies_count
             FROM

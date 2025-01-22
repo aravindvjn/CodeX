@@ -21,6 +21,7 @@ function AccountProfile({ user, data }: User) {
       />
       <div className="flex flex-col items-center">
         <EditName name={user?.name} />
+        <p>@{user?.username || 'codex user'}</p>
         <p className="text-sm text-center text-gray-600">{user?.email}</p>
         <p>{user?.bio}</p>
       </div>

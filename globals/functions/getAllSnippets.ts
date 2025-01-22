@@ -17,7 +17,8 @@ export const getAllSnippets = async ({ slug, search }: GetSnippetsType) => {
             snippets.created_at,
             users.id AS user_id,
             users.name,
-            users.email 
+            users.email,
+            users.username 
         FROM snippets
         JOIN users ON snippets.author_id = users.id
     `;

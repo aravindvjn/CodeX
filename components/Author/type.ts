@@ -4,4 +4,5 @@ export type AuthorDataProps = {
     email: string;
     created_at: string;
     bio?: string;
+    username?: string
 }

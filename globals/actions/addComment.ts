@@ -27,7 +27,7 @@ export const addComment = async (prev: AddCommentProps | undefined, formData: Fo
     try {
         const result = await query(queryCode, [snippetId, userId, comment, parentCommentId]);
         const userData = await getAuthorData(userId)
-        const commentRes = { ...result.rows[0], name: userData.name };
+        const commentRes = { ...result.rows[0], username: userData.username };
         return { success: true, comment: commentRes };
     } catch (error) {
         console.error('Error inserting comment:', error);

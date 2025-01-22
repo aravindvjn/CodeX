@@ -12,7 +12,7 @@ function CommentFeature({ snippet_id }: { snippet_id: string }) {
   const [ref, isVisible] = useOnScreen({ threshold: 0.5 });
   const [isFinished, setIsFinished] = useState<boolean>(false);
   const [reply, setReply] = useState<ReplyType>();
-
+  const [replies, setReplies] = useState<CommentTypes[]>([]);
   const fetchComments = async (refetch?: boolean) => {
     setIsLoading(true);
     const limit = 5;
@@ -56,12 +56,15 @@ function CommentFeature({ snippet_id }: { snippet_id: string }) {
   return (
     <div>
       <CommentSection
+        replies={replies}
+        setReplies={setReplies}
         setReply={setReply}
         isLoading={isLoading}
         comments={comments}
       />
       <div ref={ref}></div>
       <AddComments
+      setReplies={setReplies}
         fetchComments={fetchComments}
         reply={reply}
         setReply={setReply}

@@ -4,38 +4,45 @@ import React, {
   SetStateAction,
   useActionState,
   useEffect,
+  useState,
 } from "react";
 import { IoIosSend } from "react-icons/io";
 import { addComment } from "@/globals/actions/addComment";
 import { CommentTypes, ReplyType, SetReplyType } from "./type";
-import { MdReplyAll } from "react-icons/md";
 
 export type CommentSectionProps = {
   snippet_id: string;
   setComments: Dispatch<SetStateAction<CommentTypes[]>>;
   reply: ReplyType;
   setReply: SetReplyType;
-  fetchComments: (refetch:boolean) => void;
+  fetchComments: (refetch: boolean) => void;
+  setReplies: Dispatch<SetStateAction<CommentTypes[]>>;
 };
 
 function AddComments({
   snippet_id,
   setComments,
   reply,
-  setReply,
-  fetchComments,
+  setReplies,
 }: CommentSectionProps) {
   const [state, action, isPending] = useActionState(addComment, undefined);
-
+  const [comment, setComment] = useState("");
   useEffect(() => {
     if (state && state.success && state.comment.text) {
       if (!state.comment.parent_comment_id) {
         setComments((prev) => [state.comment, ...prev]);
       } else {
-        fetchComments(true);
+        setReplies((prev) => [...prev, state.comment]);
       }
     }
   }, [state]);
+
+  useEffect(() => {
+    if (reply?.comment_id) {
+      setComment((prev) => "@"+reply?.username+' '+ prev);
+    }
+  }, [reply]);
+
   return (
     <form
       action={action}
@@ -49,17 +56,10 @@ function AddComments({
       />
       <div className="flex justify-between w-full pr-6 gap-3 items-end">
         <div className="w-full">
-          {reply && reply.comment_id && (
-            <button
-              className="flex items-center gap-2 opacity-70 text-[16px]"
-              onClick={() => setReply(undefined)}
-            >
-              replying to {reply.name || "Unkown"}
-              <MdReplyAll />
-            </button>
-          )}
           <textarea
             name="comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
             className="px-3 flex flex-grow py-2 rounded text-black min-h-8 w-full"
             placeholder="Comment..."
           />
