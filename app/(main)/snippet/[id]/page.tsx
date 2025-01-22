@@ -1,9 +1,6 @@
 "use server";
 import DetailedCard from "@/components/Card/DetailedCard";
-import AddComments from "@/components/Comments/AddComments";
 import CommentFeature from "@/components/Comments/CommentFeature";
-import CommentSection from "@/components/Comments/CommentSection";
-import { getComments } from "@/globals/functions/getComments";
 import { getSnippetById } from "@/globals/functions/getSnippetById";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -20,12 +17,10 @@ async function page({ params }: SnippetPropType) {
   if (!snippet) {
     notFound();
   }
-  const prevComments = await getComments(snippet?.snippet_id);
   return (
     <div>
       <DetailedCard {...snippet} />
       <CommentFeature
-        prevComments={prevComments}
         snippet_id={snippet.snippet_id}
       />
     </div>
