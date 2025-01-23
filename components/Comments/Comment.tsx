@@ -31,12 +31,11 @@ function Comment({
 
     setShowReply(true);
     setIsLoading(true);
-
     const results = await getReplies(comment_id);
 
     if (results.length > 0) {
       setReplies!(results);
-    }
+    } 
     setIsLoading(false);
   };
 
@@ -45,6 +44,7 @@ function Comment({
       replies?.filter((reply) => reply.parent_comment_id === comment_id)
     );
   }, [replies]);
+
   return (
     <div
       className={` rounded-lg rounded-tl-none bg-cardbackground px-4 py-2 flex flex-col items-start w-fit ${
@@ -75,10 +75,10 @@ function Comment({
         </button>
         {(parseInt(replies_count || "0") !== 0 ||
           filteredReplies!.length > 0) && (
-            <button onClick={fetchReplyComments}>
-              {showReply ? "Hide replies" : "Show replies"}
-            </button>
-          )}
+          <button onClick={fetchReplyComments}>
+            {showReply ? "Hide replies" : "Show replies"}
+          </button>
+        )}
       </div>
       {showReply && (
         <ShowReplyComment

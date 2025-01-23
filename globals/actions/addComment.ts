@@ -14,7 +14,7 @@ export const addComment = async (prev: AddCommentProps | undefined, formData: Fo
     const comment = formData.get('comment');
     const snippetId = formData.get('snippet_id');
     const userId = await getUserId();
-    const parentCommentId: any = formData.get('parent_comment_id');
+    const parentCommentId: any = formData.get('parent_comment_id') || null
     const queryCode = `
       INSERT INTO comments (snippet_id, user_id, text, parent_comment_id)
       VALUES ($1, $2, $3, $4)

@@ -13,22 +13,29 @@ function CommentFeature({ snippet_id }: { snippet_id: string }) {
   const [isFinished, setIsFinished] = useState<boolean>(false);
   const [reply, setReply] = useState<ReplyType>();
   const [replies, setReplies] = useState<CommentTypes[]>([]);
+
   const fetchComments = async (refetch?: boolean) => {
+
     setIsLoading(true);
     const limit = 5;
+
     if (refetch) {
       setComments([]);
       setIsFinished(false);
     }
+
     const page = refetch ? 1 : Math.floor(comments.length / limit + 1);
     const results = await getComments(snippet_id, page);
+
     if (results.length > 0) {
+
       setComments((prev) => {
         const combined = [...prev, ...results];
         const uniqueArray = combined.reduce((acc, current) => {
           const exists = acc.find(
             (item: CommentTypes) => item.comment_id === current.comment_id
           );
+
           if (!exists) {
             acc.push(current);
           }
@@ -36,6 +43,7 @@ function CommentFeature({ snippet_id }: { snippet_id: string }) {
         }, [] as CommentTypes[]);
         return uniqueArray;
       });
+
     } else {
       setIsFinished(true);
     }

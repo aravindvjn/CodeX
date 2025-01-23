@@ -12,11 +12,14 @@ export type SnippetPropType = {
 };
 
 async function page({ params }: SnippetPropType) {
+  
   const { id } = await params;
+
   const snippet = await getSnippetById(id);
   if (!snippet) {
     notFound();
   }
+
   return (
     <div>
       <DetailedCard {...snippet} />

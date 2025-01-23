@@ -24,3 +24,7 @@ body {
   background: var(--background);
   font-family:'DM Sans', Helvetica, sans-serif;
 }
+#nprogress .bar {
+  background: #29d !important; /* Ensure color is applied */
+  height: 3px !important; /* Set height explicitly */
+}

@@ -9,6 +9,7 @@ export default function CodeEditor({
   initialCode: string;
   language: string;
 }) {
+
   const [code, setCode] = useState<string>(initialCode);
   const [windowSize, setWindowSize] = useState<{
     width: number;
@@ -47,6 +48,7 @@ export default function CodeEditor({
       style={{ height: windowSize.height / 2 }}
       className="rounded overflow-hidden"
     >
+
       <Editor
         height="100%"
         language={language || "javascript"}
@@ -54,6 +56,7 @@ export default function CodeEditor({
         onChange={handleEditorChange}
         theme="vs-dark"
       />
+      
     </div>
   );
 }

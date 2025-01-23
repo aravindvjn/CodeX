@@ -15,20 +15,24 @@ export type PageSearchParams = {
     slug: string;
   }>;
 };
+
 export default async function Home({
   searchParams = undefined,
 }: PageSearchParams) {
   const { search = "" } = (await searchParams) || {};
 
+  //Fetch all snippets based on the search parameters
   const data = await getAllSnippets({
     slug: "",
     search: search,
   });
+
+
   return (
     <div>
       <Search input={search} />
       <AddSnippets />
-      <div className=" gap-3 md:gap-5 mt-5 grid sm:grid-cols-2 lg:grid-cols-3">
+      <div className="gap-3 md:gap-5 mt-5 grid sm:grid-cols-2 lg:grid-cols-3">
         {data.length > 0 &&
           data?.map((item, index) => <Card key={index} {...item} />)}
       </div>

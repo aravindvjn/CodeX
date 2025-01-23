@@ -31,8 +31,8 @@ export const GET = async (req: NextRequest) => {
         ORDER BY c.timestamp DESC OFFSET $2 LIMIT $3;`
         } else {
             queryCode += ` WHERE parent_comment_id = $1
-        ORDER BY c.timestamp DESC OFFSET $2 LIMIT $3;`
-            params = [comment_id, offset, limit]
+        ORDER BY c.timestamp DESC;`
+            params = [comment_id]
         }
         const results = await query(queryCode, params as string[])
         return NextResponse.json(results.rows || [], { status: 200 })

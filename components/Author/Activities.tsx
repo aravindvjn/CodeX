@@ -3,6 +3,7 @@ import NoActivities from "../Features/NoActivities";
 import Card, { CardProps } from "../Card/Card";
 import { User } from "../Account/AccountProfile";
 function Activities({ snippets, user }: { snippets: CardProps[]; user: User }) {
+  
   return (
     <div className="mt-5">
       <p className="text-lg font-semibold">Activities : </p>

@@ -13,10 +13,13 @@ export type AuthorProps = {
 async function page({ searchParams }: AuthorProps) {
   const { identifier } = await searchParams;
   const data = await getAuthorData(identifier);
+
   if (!data) {
     notFound();
   }
+
   const snippets = await getSnippetsByUserId(identifier);
+  
   return (
     <div>
       <Profile {...data} />

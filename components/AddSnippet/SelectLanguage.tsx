@@ -34,11 +34,13 @@ function LanguageOptions({
       className="rounded bg-cardbackground px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primarycolor"
     >
       <option value="">All</option>
+
       {languages?.map((language) => (
         <option key={language?.value} value={language?.value}>
           {language?.label}
         </option>
       ))}
+      
     </select>
   );
 }

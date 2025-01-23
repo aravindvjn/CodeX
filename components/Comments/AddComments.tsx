@@ -9,6 +9,7 @@ import React, {
 import { IoIosSend } from "react-icons/io";
 import { addComment } from "@/globals/actions/addComment";
 import { CommentTypes, ReplyType, SetReplyType } from "./type";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export type CommentSectionProps = {
   snippet_id: string;
@@ -34,12 +35,13 @@ function AddComments({
       } else {
         setReplies((prev) => [...prev, state.comment]);
       }
+      setComment("");
     }
   }, [state]);
 
   useEffect(() => {
     if (reply?.comment_id) {
-      setComment((prev) => "@"+reply?.username+' '+ prev);
+      setComment((prev) => "@" + reply?.username + " " + prev);
     }
   }, [reply]);
 
@@ -69,7 +71,7 @@ function AddComments({
           type="submit"
           className="rounded-full h-10 w-10 aspect-square justify-center items-center flex bg-blue-600 "
         >
-          <IoIosSend size={22} />
+         {isPending ? <AiOutlineLoading3Quarters size={18} className="animate-spin" /> :  <IoIosSend size={22} />}
         </button>
       </div>
     </form>

@@ -14,16 +14,17 @@ export type CardProps = {
   created_at?: string;
   updated_at?: string;
   language?: string;
-  id?:string;
+  id?: string;
+  username?: string;
 };
 function Card({
   snippet_id,
   code = "",
   title = "No Title",
-  name,
   you,
   language,
   user_id,
+  username,
 }: CardProps) {
   return (
     <div className="flex flex-col gap-3 sm:gap-5 p-5 bg-cardbackground rounded shadow-sm overflow-hidden justify-between">
@@ -35,15 +36,15 @@ function Card({
           <p>{extractLangauge(language || "")}</p>
           {language && "/"}
           <Link href={`/author?identifier=${user_id}`}>
-            {name || "unknown author"}
+            @{username || "codex user"}
           </Link>{" "}
           <p>{you ? "/ you " : ""}</p>
         </div>
-      <pre className="overflow-hidden text-[12px] opacity-90 text-wrap break-words line-clamp-5">
-        <code>{code}</code>
-      </pre>
+        <pre className="overflow-hidden text-[12px] opacity-90 text-wrap break-words line-clamp-5">
+          <code>{code}</code>
+        </pre>
       </div>
-      <div >
+      <div>
         <Button destination={`/snippet/${snippet_id}`}>Read More</Button>
       </div>
     </div>

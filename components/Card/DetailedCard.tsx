@@ -13,7 +13,7 @@ function DetailedCard({
   title,
   code,
   you,
-  name,
+  username,
   language,
   user_id,
 }: CardProps) {
@@ -28,7 +28,7 @@ function DetailedCard({
 
         <Link href={`/author?identifier=${user_id}`}>
           {" "}
-          <p className="">Author : {name || "Unknown"}</p>
+          <p className="">Author : @{username || "codex user"}</p>
         </Link>
       </div>
       <CodeSnippet code={code || ""} />

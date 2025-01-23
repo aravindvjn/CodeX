@@ -5,13 +5,18 @@ import { FaEdit } from "react-icons/fa";
 import { AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { editProfile } from "@/globals/actions/EditProfile";
 import toast from "react-hot-toast";
+
 function EditName({ name }: { name: string }) {
+
   const [showEdit, setShowEdit] = useState<boolean>(false);
   const [state, action, isPending] = useActionState(editProfile, undefined);
   const [newName, setNewName] = useState<string>(name);
+
   const toggetEdit = () => {
     setShowEdit((prev) => !prev);
   };
+
+  //To update the name in real time
   useEffect(() => {
     if (state?.message && !state.name) {
       toast.error(state.message);
@@ -24,11 +29,13 @@ function EditName({ name }: { name: string }) {
   useEffect(() => {
     setNewName(name);
   },[]);
+
   return (
     <form
       action={action}
       className="flex justify-center items-center gap-2 relative"
     >
+
       {!isPending && showEdit ? (
         <input
           maxLength={15}
@@ -41,6 +48,7 @@ function EditName({ name }: { name: string }) {
           {newName}
         </h1>
       )}
+
       {!isPending ? (
         showEdit ? (
           <div className="flex items-center gap-1">
@@ -59,6 +67,7 @@ function EditName({ name }: { name: string }) {
       ) : (
         <LuRefreshCw size={20} />
       )}
+
     </form>
   );
 }

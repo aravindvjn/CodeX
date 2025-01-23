@@ -17,6 +17,7 @@ export default async function Page({
     slug,
     search: search || "",
   });
+  
   return (
     <div>
       <Search input={search} />

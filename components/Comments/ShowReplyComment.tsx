@@ -15,7 +15,7 @@ function ShowReplyComment({
   comment_id: string | number;
 }) {
   return (
-    <div className="overflow-hidden pl-5 flex flex-col gap-2 mt-2">
+    <div className="overflow-hidden pl-8 flex flex-col gap-2 mt-2">
       {replies?.length > 0 ? (
         replies.map((reply) => (
           <div key={reply.comment_id}>
