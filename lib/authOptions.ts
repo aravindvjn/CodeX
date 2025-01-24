@@ -26,17 +26,20 @@ export const authOptions: NextAuthOptions = {
             if (account?.provider && profile) {
                 try {
                     const existingUser = await query(
-                        'SELECT id FROM users WHERE email = $1 AND provider = $2',
+                        'SELECT id,username FROM users WHERE email = $1 AND provider = $2',
                         [profile.email, account.provider]
                     );
 
                     let userId;
+                    let username;
+
                     if (existingUser.rows.length > 0) {
                         userId = existingUser.rows[0].id;
+                        username = existingUser.rows[0].username;
                     } else {
                         const result = await query(
                             `INSERT INTO users (email, name, provider) 
-                             VALUES ($1, $2, $3) RETURNING id`,
+                             VALUES ($1, $2, $3) RETURNING id, username`,
                             [
                                 profile.email,
                                 profile.name || 'Unknown',
@@ -44,11 +47,11 @@ export const authOptions: NextAuthOptions = {
                             ]
                         );
                         userId = result.rows[0].id;
+                        username=result.rows[0].username;
                     }
-
+                    token.username = username || '';
                     token.id = userId;
                     token.email = profile.email;
-                    token.name = profile.name || 'Unknown';
                     token.picture = profile.picture || profile.avatar_url;
                 } catch (error) {
                     console.error('Error during user query:', error);
@@ -64,6 +67,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.email = token.email;
                 session.user.name = token.name;
                 session.user.image = token.picture;
+                session.user.username = token.username;
             }
             return session;
         },

@@ -14,3 +14,15 @@ export const getUserId = async () => {
         return null;
     }
 }
+export const getUserData = async () => {
+    try {
+        const session = await getServerSession(authOptions);
+        if (!session) {
+            return null;
+
+        }
+        return session?.user || null;
+    } catch {
+        return null;
+    }
+}

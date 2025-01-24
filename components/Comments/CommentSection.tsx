@@ -28,6 +28,9 @@ function CommentSection({
         />
       ))}
       {isLoading && <Loading />}
+
+      {!isLoading && comments?.length === 0 &&
+        <p className="text-center opacity-70">No Comments are available.</p>}
     </div>
   );
 }

@@ -7,9 +7,10 @@ import Button from "../ui/Button";
 import { CardProps } from "../Card/Card";
 import { PageType, prevActionStateType } from "./type";
 import LanguageOptions from "./SelectLanguage";
+import BackButton from "../ui/BackButton";
+import Link from "next/link";
 
 function AddSnippet({ code, snippet_id, title, language }: CardProps) {
-
   const [selectedLanguage, setSelectedLanguage] = useState<string>(
     language || ""
   );
@@ -32,11 +33,26 @@ function AddSnippet({ code, snippet_id, title, language }: CardProps) {
 
   return (
     <form action={action} method="post" className="flex flex-col gap-5">
-      <p className="text-lg font-semibold">{page}</p>
+      <div className="flex items-center gap-2">
+        <BackButton />
+        <p className="text-lg font-semibold">{page}</p>
+      </div>
 
-      {state && <p className="text-red-600">{state?.message}</p>}
+      {state?.message && (
+        <p className="text-red-600">
+          {state?.message}{" "}
+          {state?.message === "You must need to set a username" && (
+            <Link className="text-blue-500 underline-offset-3 underline" href={"/account"}>
+              set username
+            </Link>
+          )}
+        </p>
+      )}
 
-      <LanguageOptions selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
+      <LanguageOptions
+        selectedLanguage={selectedLanguage}
+        setSelectedLanguage={setSelectedLanguage}
+      />
       <Inputs defaultValue={title} name="title" />
 
       <div>
@@ -51,7 +67,6 @@ function AddSnippet({ code, snippet_id, title, language }: CardProps) {
       <Button disabled={isPending} type="submit">
         {isPending ? "Saving..." : "Save"}
       </Button>
-      
     </form>
   );
 }

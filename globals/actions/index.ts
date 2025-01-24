@@ -2,7 +2,7 @@
 import { prevActionStateType } from "@/components/AddSnippet/type";
 import { DeleteActionType } from "@/components/Card/DeleteButton";
 import { query } from "@/lib/db";
-import { getUserId } from "@/lib/session";
+import { getUserData, getUserId } from "@/lib/session";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -13,15 +13,25 @@ export const snippetAction = async (prevState: prevActionStateType, formData: Fo
         const title = formData.get('title')?.toString().trim();
         const code = formData.get('code')?.toString().trim();
         const language = formData.get('language')?.toString().trim();
+
+        const user = await getUserData()
+        if (!user) {
+            return { message: 'You must be logged in to create a snippet.', snippet_id: prevState?.snippet_id, page: prevState?.page };
+        }
+        const userId = user?.id
+        const username = user?.username
+
+        if (!username) {
+            return {
+                message: 'You must need to set a username', snippet_id: prevState?.snippet_id, page: prevState?.page
+            }
+        }
+
         if (!title || !code) {
             return { message: 'You cannot leave empty fields.', snippet_id: prevState?.snippet_id, page: prevState?.page };
         }
 
-        const userId = await getUserId()
-
-        if (!userId) {
-            return { message: 'You must be logged in to create a snippet.', snippet_id: prevState?.snippet_id, page: prevState?.page };
-        }
+       
 
 
         let results;
