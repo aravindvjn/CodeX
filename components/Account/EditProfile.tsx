@@ -14,6 +14,7 @@ export type DataProps = {
 };
 function EditProfile({ user }: DataProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const onClose = () => {
     setIsOpen(false);
   };
@@ -29,6 +30,9 @@ function EditProfile({ user }: DataProps) {
     if (state?.success) {
       setIsOpen(false);
       router.refresh();
+      setError("");
+    } else {
+      setError(state?.message);
     }
   }, [state?.success]);
   return (
@@ -51,7 +55,7 @@ function EditProfile({ user }: DataProps) {
       </button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <form action={action} className="flex flex-col gap-3">
-          {state?.message && <p className="text-red-500">{state?.message}</p>}
+          {error && <p className="text-red-500">{error}</p>}
           <Inputs defaultValue={user?.name} name="name" />
           <Inputs required defaultValue={user?.username} name="username" />
           <Inputs defaultValue={user?.bio} name="bio" />

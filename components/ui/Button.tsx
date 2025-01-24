@@ -1,8 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { ButtonHTMLAttributes, CSSProperties } from "react";
+import React, { CSSProperties } from "react";
+import { motion, HTMLMotionProps } from "framer-motion";
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends HTMLMotionProps<"button"> {
   children: React.ReactNode;
   isLoading?: boolean;
   style?: CSSProperties;
@@ -27,7 +28,12 @@ function Button({
     }
   };
   return (
-    <button
+    <motion.button
+      whileTap={{
+        backgroundColor: "var(--primarycolor)",
+        scale: 0.95,
+        rotate: "1.5deg",
+      }}
       onClick={handleClick}
       style={style}
       className="px-3 py-2 font-semibold text-[16px] rounded border-primarycolor border text-white transition-opacity sm:hover:opacity-75 duration-100"
@@ -35,7 +41,7 @@ function Button({
       {...props}
     >
       {children}
-    </button>
+    </motion.button>
   );
 }
 
