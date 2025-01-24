@@ -11,14 +11,16 @@ export const editProfile = async (prev: { message: string, success?: boolean } |
         if (!username) {
             return { message: 'username is required', success: false };
         }
+        const usernameRegex = /^[a-zA-Z0-9_]{6,30}$/;
 
-        if (typeof username !== 'string' || username.length < 6) {
-            return { message: 'username must be at least 6 characters', success: false };
+        if (typeof username !== 'string' || !usernameRegex.test(username)) {
+            return { message: 'username must be at least 6 characters and contain only letters, numbers, and underscores', success: false };
         }
-        
+
+
         const user_id = await getUserId();
 
-        const userNameExists = await query('SELECT username from users WHERE username = $1 AND id !=$2', [username,user_id])
+        const userNameExists = await query('SELECT username from users WHERE username = $1 AND id !=$2', [username, user_id])
 
         if (userNameExists?.rows?.length > 0) {
             return { message: 'Username already exists', data: false };
