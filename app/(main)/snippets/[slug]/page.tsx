@@ -1,10 +1,10 @@
 "use server";
-import Card from "@/components/Card/Card";
 import AddSnippets from "@/components/Home/AddSnippets";
 import Search from "@/components/Home/Search";
-import { getAllSnippets } from "@/globals/functions/getAllSnippets";
 import { PageSearchParams } from "../../page";
-import NoResults from "@/components/Features/NoResults";
+import SnippetGrids from "@/components/Snippets/snippets-grid";
+import { Suspense } from "react";
+import CardLoading from "@/components/Card/CardLoading";
 
 export default async function Page({
   searchParams = undefined,
@@ -13,20 +13,13 @@ export default async function Page({
   const { slug } = await params;
   const { search = "" } = (await searchParams) || {};
 
-  const data = await getAllSnippets({
-    slug,
-    search: search || "",
-  });
-  
   return (
     <div>
       <Search input={search} />
       <AddSnippets slug={slug} />
-      <div className=" gap-3 md:gap-5 mt-5 grid sm:grid-cols-2 lg:grid-cols-3">
-        {data.length > 0 &&
-          data?.map((item, index) => <Card key={index} {...item} />)}
-      </div>
-      {data?.length === 0 && <NoResults />}
+      <Suspense fallback={<CardLoading/>}>
+        <SnippetGrids slug={slug} search={search} />
+      </Suspense>
     </div>
   );
 }
